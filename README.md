@@ -35,6 +35,7 @@ Feign是一个声明式的Web Service客户端。
 通过网关访问compute服务：
 
 http://localhost:5555/feign-compute/add?token=test
+
 http://localhost:5555/ribbon-compute/add?token=test
 
 ### 小技巧
