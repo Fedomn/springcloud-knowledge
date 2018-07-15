@@ -16,6 +16,8 @@ Feign是一个声明式的Web Service客户端。
 
 # 服务运行
 
+build各服务jar：```./gradlew build```
+
 启动服务注册中心：```java -jar eureka-server/build/libs/*.jar```
 
 启动服务提供方：
@@ -40,4 +42,5 @@ http://localhost:5555/ribbon-compute/add?token=test
 
 ### 小技巧
 item2：CMD+I修改session name方便管理
+
 idea：总工程下new module管理
