@@ -11,7 +11,7 @@ Ribbon是一个基于HTTP和TCP客户端的负载均衡器。
 Feign是一个声明式的Web Service客户端。
 
 ### 服务网关
-这里采用zuul
+这里采用zuul，它的路由转发采用Ribbon
 
 
 # 服务运行
