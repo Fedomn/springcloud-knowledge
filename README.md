@@ -11,7 +11,7 @@ Ribbon是一个基于HTTP和TCP客户端的负载均衡器。
 Feign是一个声明式的Web Service客户端。
 
 ### 服务网关
-这里采用zull
+这里采用zuul
 
 
 # 服务运行
@@ -28,7 +28,7 @@ build各服务jar：```./gradlew build```
 * ribbon-consumer：```java -jar ribbon-service/build/libs/*.jar```
 * feign-consumer：```java -jar feign-service/build/libs/*.jar```
 
-启动服务网关：```java -jar zull-service/build/libs/*.jar```
+启动服务网关：```java -jar zuul-service/build/libs/*.jar```
 
 # 怎么调用与查看
 
