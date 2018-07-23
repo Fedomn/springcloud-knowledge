@@ -1,0 +1,68 @@
+{
+    "provider": {
+        "name": "compute-service"
+    },
+    "consumer": {
+        "name": "computeClient"
+    },
+    "interactions": [
+        {
+            "description": "a request to GET the sum of two numbers",
+            "request": {
+                "method": "GET",
+                "path": "/add",
+                "query": {
+                    "a": [
+                        "1"
+                    ],
+                    "b": [
+                        "2"
+                    ]
+                }
+            },
+            "response": {
+                "status": 200,
+                "headers": {
+                    "Content-Type": "application/json; charset=UTF-8"
+                },
+                "body": 3,
+                "matchingRules": {
+                    "body": {
+                        "$": {
+                            "matchers": [
+                                {
+                                    "match": "integer"
+                                }
+                            ],
+                            "combine": "AND"
+                        }
+                    },
+                    "header": {
+                        "Content-Type": {
+                            "matchers": [
+                                {
+                                    "match": "regex",
+                                    "regex": "application/json;\\s?charset=(utf|UTF)-8"
+                                }
+                            ],
+                            "combine": "AND"
+                        }
+                    }
+                }
+            },
+            "providerStates": [
+                {
+                    "name": "provider two numbers"
+                }
+            ]
+        }
+    ],
+    "metadata": {
+        "pactSpecification": {
+            "version": "3.0.0"
+        },
+        "pact-jvm": {
+            "version": "3.5.19"
+        }
+    }
+}
