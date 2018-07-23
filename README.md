@@ -44,3 +44,17 @@ http://localhost:5555/ribbon-compute/add?token=test
 item2：CMD+I修改session name方便管理
 
 idea：总工程下new module管理
+
+### 契约测试
+
+Consumer-Driven Contracts With Pact
+
+consumer：feign-service
+
+provider：compute-service
+
+consumer生成契约：feign-service下 gradle clean test -i
+
+provider验证契约：compute-service下 gradle clean test -i
+
+测试契约：修改compute-service里Add方法返回值后，gradle clean test -i，即可看到failed地方
