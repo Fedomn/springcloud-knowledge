@@ -3,10 +3,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import au.com.dius.pact.consumer.Pact;
 import au.com.dius.pact.consumer.PactProviderRuleMk2;
 import au.com.dius.pact.consumer.PactVerification;
-import au.com.dius.pact.consumer.dsl.PactDslJsonRootValue;
+import au.com.dius.pact.consumer.dsl.PactDslJsonBody;
 import au.com.dius.pact.consumer.dsl.PactDslWithProvider;
 import au.com.dius.pact.model.RequestResponsePact;
 import com.fedomn.feignservice.ComputeClient;
+import com.fedomn.feignservice.ComputeResponse;
 import com.fedomn.feignservice.FeignServiceApplication;
 import org.junit.Rule;
 import org.junit.Test;
@@ -40,14 +41,15 @@ public class ConsumerPactVerificationTest {
         .method("GET")
         .willRespondWith()
         .status(200)
-        .body(PactDslJsonRootValue.integerType(3))
+        .body(new PactDslJsonBody().booleanValue("status", true).numberValue("computeResult", 3))
         .toPact();
   }
 
   @Test
   @PactVerification(fragment = "createAddPact")
   public void verifyCreatePersonPact() {
-    Integer addResult = computeClient.add(1, 2);
-    assertThat(addResult).isEqualTo(3);
+    ComputeResponse addResponse = computeClient.add(1, 2);
+    assertThat(addResponse.getStatus()).isTrue();
+    assertThat(addResponse.getComputeResult()).isEqualTo(3);
   }
 }

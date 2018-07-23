@@ -25,17 +25,13 @@
                 "headers": {
                     "Content-Type": "application/json; charset=UTF-8"
                 },
-                "body": 3,
+                "body": {
+                    "computeResult": 3,
+                    "status": true
+                },
                 "matchingRules": {
                     "body": {
-                        "$": {
-                            "matchers": [
-                                {
-                                    "match": "integer"
-                                }
-                            ],
-                            "combine": "AND"
-                        }
+                        
                     },
                     "header": {
                         "Content-Type": {
