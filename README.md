@@ -58,3 +58,6 @@ consumer生成契约：feign-service下 gradle clean test -i
 provider验证契约：compute-service下 gradle clean test -i
 
 测试契约：修改compute-service里Add方法返回值后，gradle clean test -i，即可看到failed地方
+
+可以通过gradle插件publish pacts到pact broker 
+[参考](https://github.com/DiUS/pact-jvm/tree/master/pact-jvm-provider-gradle#publishing-pact-files-to-a-pact-broker-version-227)
