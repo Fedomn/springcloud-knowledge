@@ -86,3 +86,52 @@ self服务调用：http://localhost:5555/self/test?token=123
 下游bff调用：http://localhost:5555/feign-compute/add?token=1&a=1&b=2
 
 下游服务调用：http://localhost:5555/raw-compute/add?token=123&a=1&b=2
+
+
+### 注意：
+
+zuul-service里TokenFilter 要想不执行默认的route filter该如何操作。一步步分析：
+
+1、默认的route filter如下：
+
+* SimpleHostRoutingFilter：配URL=host
+* RibbonRoutingFilter：配service-id
+* SendForwardFilter：配URL=forward:
+
+2、重点：由于zuul和内嵌BFF融合在一起了。所以这里存在两种方式过route filter
+
+* 内嵌BFF通过forward方式过 SendForwardFilter
+* 通过配service-id的过 RibbonRoutingFilter
+
+通过看他们两的shouldFilter方法，来实现TokenFilter里不走route filter的配置。
+
+3、更好的方式：
+
+* 通过disable原有filter重写对应filter来实现自己逻辑
+* 通过异常在pre阶段抛出异常来跳过route
+
+具体每个filter的执行顺序参考
+zuul-core-1.3.1-sources.jar!/com/netflix/zuul/http/ZuulServlet.java#service
+简要如下
+```
+try {
+    preRoute();
+} catch (ZuulException e) {
+    error(e);
+    postRoute();
+    return;
+}
+try {
+    route();
+} catch (ZuulException e) {
+    error(e);
+    postRoute();
+    return;
+}
+try {
+    postRoute();
+} catch (ZuulException e) {
+    error(e);
+    return;
+}
+```
