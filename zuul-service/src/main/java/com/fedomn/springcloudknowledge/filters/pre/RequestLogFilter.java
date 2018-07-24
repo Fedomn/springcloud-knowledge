@@ -19,7 +19,7 @@ public class RequestLogFilter extends ZuulFilter {
 
   @Override
   public int filterOrder() {
-    return 1;
+    return 3;
   }
 
   @Override

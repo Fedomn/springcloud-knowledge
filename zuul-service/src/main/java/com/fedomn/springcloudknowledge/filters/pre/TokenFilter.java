@@ -5,6 +5,7 @@ import static org.springframework.cloud.netflix.zuul.filters.support.FilterConst
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import javax.servlet.http.HttpServletRequest;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,7 +20,7 @@ public class TokenFilter extends ZuulFilter {
 
   @Override
   public int filterOrder() {
-    return 0;
+    return 2;
   }
 
   @Override
@@ -32,11 +33,12 @@ public class TokenFilter extends ZuulFilter {
     RequestContext ctx = RequestContext.getCurrentContext();
     HttpServletRequest request = ctx.getRequest();
     String token = request.getParameter("token");
-    if (token == null) {
+    if (StringUtils.isBlank(token)) {
       logger.warn("access token is empty");
-      ctx.setSendZuulResponse(false);
       ctx.setResponseStatusCode(401);
-      return null;
+      throw new RuntimeException("invalid token");
+    } else {
+      logger.info("access token success");
     }
     return null;
   }

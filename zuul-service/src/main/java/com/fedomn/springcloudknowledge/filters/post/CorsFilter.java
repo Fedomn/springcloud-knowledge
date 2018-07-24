@@ -6,8 +6,12 @@ import static org.springframework.cloud.netflix.zuul.filters.support.FilterConst
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import javax.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class CorsFilter extends ZuulFilter {
+
+  private static final Logger logger = LoggerFactory.getLogger(CorsFilter.class);
 
   @Override
   public String filterType() {
@@ -29,6 +33,7 @@ public class CorsFilter extends ZuulFilter {
     RequestContext context = RequestContext.getCurrentContext();
     HttpServletResponse servletResponse = context.getResponse();
     servletResponse.addHeader("Access-Control-Allow-Origin", "*");
+    logger.info("write cors header success");
     return null;
   }
 }
