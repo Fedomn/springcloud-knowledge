@@ -36,7 +36,11 @@ public class TokenFilter extends ZuulFilter {
     if (StringUtils.isBlank(token)) {
       logger.warn("access token is empty");
       ctx.setResponseStatusCode(401);
-      throw new RuntimeException("invalid token");
+      ctx.setResponseBody("invalid token");
+      // for RibbonRoutingFilter
+      ctx.setSendZuulResponse(false);
+      // for SendForwardFilter
+      ctx.set("sendForwardFilter.ran", true);
     } else {
       logger.info("access token success");
     }
