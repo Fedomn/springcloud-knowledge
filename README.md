@@ -45,7 +45,7 @@ item2：CMD+I修改session name方便管理
 
 idea：总工程下new module管理
 
-### 契约测试
+# 契约测试
 
 Consumer-Driven Contracts With Pact
 
@@ -61,3 +61,28 @@ provider验证契约：compute-service下 gradle clean test -i
 
 可以通过gradle插件publish pacts到pact broker 
 [参考](https://github.com/DiUS/pact-jvm/tree/master/pact-jvm-provider-gradle#publishing-pact-files-to-a-pact-broker-version-227)
+
+# zuul内嵌BFF
+
+参考zuul-service里application.yml
+
+分为两种路由
+ 
+* 服务调用：下游BFF/下游服务
+* 内部调用：内嵌BFF/self服务
+
+其中内部调用通过zuul本地跳转实现 目的为了过filters
+
+### 运行方法：
+
+参考上面 服务运行启动
+
+依次启动eureka-server/两个compute-service/feign-service
+
+内部bff调用：http://localhost:5555/bff/add?a=1&b=2&token=123
+
+self服务调用：http://localhost:5555/self/test?token=123
+
+下游bff调用：http://localhost:5555/feign-compute/add?token=1&a=1&b=2
+
+下游服务调用：http://localhost:5555/raw-compute/add?token=123&a=1&b=2
