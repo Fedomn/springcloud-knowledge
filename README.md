@@ -66,12 +66,17 @@ provider验证契约：compute-service下 gradle clean test -i
 
 参考zuul-service里application.yml
 
-分为两种路由
+分为两种路由：
  
 * 服务调用：下游BFF/下游服务
 * 内部调用：内嵌BFF/self服务
 
 其中内部调用通过zuul本地跳转实现 目的为了过filters
+
+业务上分两种调用方式：
+
+* zuul -> 下游服务
+* zuul -> zuul内部BFF -> 下游服务
 
 ### 运行方法：
 
