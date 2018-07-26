@@ -1,6 +1,5 @@
 package com.fedomn.springcloudknowledge;
 
-import com.fedomn.springcloudknowledge.filters.post.CorsFilter;
 import com.fedomn.springcloudknowledge.filters.pre.RequestLogFilter;
 import com.fedomn.springcloudknowledge.filters.pre.TokenFilter;
 import org.springframework.boot.SpringApplication;
@@ -28,10 +27,5 @@ public class ZuulApplication {
   @Bean
   public RequestLogFilter requestLogFilter() {
     return new RequestLogFilter();
-  }
-
-  @Bean
-  public CorsFilter corsFilter() {
-    return new CorsFilter();
   }
 }
