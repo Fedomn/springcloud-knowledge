@@ -7,22 +7,22 @@ server:
 
 zuul:
   routes:
-#   下游bff
+    # 下游bff
     ribbon-compute-service:
       path: /ribbon-compute/**
       service-id: ribbon-service
     feign-compute-serivce:
       path: /feign-compute/**
       service-id: feign-service
-#   下游服务
+    # 下游服务
     raw-compute-service:
       path: /raw-compute/**
       service-id: compute-service
-#   内嵌bff
+    # 内嵌bff
     bff-service:
       path: /bff/**
       url: forward:/bff
-#   self服务
+    # self服务
     self-service:
       path: /self/**
       url: forward:/self
@@ -35,3 +35,8 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:1111/eureka/
+
+security:
+  jwt:
+    secret: JWTSecretKey
+    expirationMs: 60000
