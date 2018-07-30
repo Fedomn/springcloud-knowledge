@@ -4,13 +4,15 @@ import static org.springframework.cloud.netflix.zuul.filters.support.FilterConst
 
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
-import javax.servlet.http.HttpServletRequest;
+import java.time.Instant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
-public class RequestLogFilter extends ZuulFilter {
+@Component
+public class RequestInFilter extends ZuulFilter {
 
-  private static Logger logger = LoggerFactory.getLogger(RequestLogFilter.class);
+  private static Logger logger = LoggerFactory.getLogger(RequestInFilter.class);
 
   @Override
   public String filterType() {
@@ -30,9 +32,7 @@ public class RequestLogFilter extends ZuulFilter {
   @Override
   public Object run() {
     RequestContext ctx = RequestContext.getCurrentContext();
-    HttpServletRequest request = ctx.getRequest();
-    logger.info(
-        String.format("%s request to %s", request.getMethod(), request.getRequestURL().toString()));
+    ctx.set("req-in-time", Instant.now());
     return null;
   }
 }
