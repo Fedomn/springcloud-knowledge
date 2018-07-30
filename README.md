@@ -140,3 +140,22 @@ try {
     return;
 }
 ```
+
+# zuul集成security/jwt
+
+获取token
+
+```
+curl -X POST \
+  http://localhost:5555/self/sign-in \
+  -H 'Content-Type: application/json' \
+  -d '{"username":"test","password":"test"}'
+```
+
+正常请求
+
+```
+curl -X GET \
+  'http://localhost:5555/raw-compute/add?token=123&a=1&b=2' \
+  -H 'Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTMyOTE0MjkyLCJleHAiOjE1MzI5MTQzNTJ9.OnEURahXiGWRoYcoY9EQ8DBoLGHu9yXMRtAJVYvJB5wQIp56SP8tl_H0hRcz5WM_Qq07xxnthjQXBIKJL4AJcQ' \
+```
