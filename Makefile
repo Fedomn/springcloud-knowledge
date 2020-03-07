@@ -7,10 +7,10 @@ e:
 	cd eureka-server && docker build -t fedomn/eureka-server .
 
 r1:
-	docker run -p 1111:1111 --env SERVICE_RUL=http://kubernetes.docker.internal:1112/eureka --env EUREKA_HOSTNAME=eureka-1 --name fedomn-eureka-1 fedomn/eureka-server
+	docker run -p 1111:1111 --env SERVICE_RUL=http://kubernetes.docker.internal:1111/eureka,http://kubernetes.docker.internal:1112/eureka --name fedomn-eureka-1 fedomn/eureka-server
 
 r2:
-	docker run -p 1112:1111 --env SERVICE_RUL=http://kubernetes.docker.internal:1111/eureka --env EUREKA_HOSTNAME=eureka-2 --name fedomn-eureka-2 fedomn/eureka-server
+	docker run -p 1112:1111 --env SERVICE_RUL=http://kubernetes.docker.internal:1111/eureka,http://kubernetes.docker.internal:1112/eureka --name fedomn-eureka-2 fedomn/eureka-server
 
 compute:
 	echo "build compute image"
