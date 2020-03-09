@@ -1,4 +1,4 @@
-package com.fedomn.eurekaserver.aws;
+package com.fedomn.computeservice.aws;
 
 import static org.springframework.cloud.commons.util.IdUtils.getDefaultInstanceId;
 
@@ -35,7 +35,7 @@ public class CloudConfiguration {
       "http://169.254.170.2/" + AWS_API_VERSION + "/metadata";
   // Used as string.contains to search correct container
   // Make sure that your Docker container in AWS Task definition has this as part of its name
-  private static final String DOCKER_CONTAINER_NAME = "eureka";
+  private static final String DOCKER_CONTAINER_NAME = "compute-service";
   private final Logger log = LoggerFactory.getLogger(CloudConfiguration.class);
   private final ConfigurableEnvironment env;
 
