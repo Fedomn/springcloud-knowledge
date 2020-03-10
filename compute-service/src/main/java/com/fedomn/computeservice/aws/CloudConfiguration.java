@@ -1,17 +1,21 @@
 package com.fedomn.computeservice.aws;
 
 import static org.springframework.cloud.commons.util.IdUtils.getDefaultInstanceId;
+import static org.springframework.cloud.netflix.eureka.EurekaClientConfigBean.DEFAULT_ZONE;
+import static org.springframework.cloud.netflix.eureka.EurekaConstants.DEFAULT_PREFIX;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.commons.util.InetUtils;
+import org.springframework.cloud.netflix.eureka.EurekaClientConfigBean;
 import org.springframework.cloud.netflix.eureka.EurekaInstanceConfigBean;
 import org.springframework.cloud.netflix.eureka.metadata.ManagementMetadata;
 import org.springframework.cloud.netflix.eureka.metadata.ManagementMetadataProvider;
@@ -45,24 +49,36 @@ public class CloudConfiguration {
   }
 
   /** We run service in fargate so override default IP when in fargate profile */
+//  @Bean
+//  public EurekaInstanceConfigBean eurekaInstanceConfig(
+//      InetUtils inetUtils, ManagementMetadataProvider managementMetadataProvider) {
+//    log.info("Customize EurekaInstanceConfigBean for AWS");
+//    log.info("Docker container should have name containing " + DOCKER_CONTAINER_NAME);
+//
+//    EurekaInstanceConfigBean config = null;
+//    try {
+//      String json = readEcsMetadata();
+//      log.info("Read EcsMetadata: {}", json);
+//      EcsTaskMetadata metadata = Converter.fromJsonString(json);
+//      String ipAddress = findContainerPrivateIP(metadata);
+//      log.info("Override ip address to " + ipAddress);
+//
+//      config = initEurekaInstanceConfigBean(ipAddress, inetUtils, managementMetadataProvider);
+//    } catch (Exception ex) {
+//      log.info("Something went wrong when reading ECS metadata: " + ex.getMessage());
+//    }
+//    return config;
+//  }
+
   @Bean
-  public EurekaInstanceConfigBean eurekaInstanceConfig(
-      InetUtils inetUtils, ManagementMetadataProvider managementMetadataProvider) {
-    log.info("Customize EurekaInstanceConfigBean for AWS");
-    log.info("Docker container should have name containing " + DOCKER_CONTAINER_NAME);
-
-    EurekaInstanceConfigBean config = null;
-    try {
-      String json = readEcsMetadata();
-      log.info("Read EcsMetadata: {}", json);
-      EcsTaskMetadata metadata = Converter.fromJsonString(json);
-      String ipAddress = findContainerPrivateIP(metadata);
-      log.info("Override ip address to " + ipAddress);
-
-      config = initEurekaInstanceConfigBean(ipAddress, inetUtils, managementMetadataProvider);
-    } catch (Exception ex) {
-      log.info("Something went wrong when reading ECS metadata: " + ex.getMessage());
-    }
+  public EurekaClientConfigBean eurekaClientConfigBean() {
+    EurekaClientConfigBean config = new EurekaClientConfigBean();
+    Map<String, String> serverUrl = new HashMap<>();
+    String DEFAULT_URL = "http://" + "localhost" + ":" + "1112" + DEFAULT_PREFIX + "/";
+    System.out.println("Default registry url: " + DEFAULT_URL);
+    serverUrl.put(DEFAULT_ZONE, DEFAULT_URL);
+    config.setServiceUrl(serverUrl);
+    config.setRegisterWithEureka(true);
     return config;
   }
 

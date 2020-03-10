@@ -8,9 +8,11 @@ import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @EnableEurekaServer
 @SpringBootApplication
+@RestController
 public class EurekaServerApplication {
   private final DiscoveryClient discoveryClient;
 

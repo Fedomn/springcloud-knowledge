@@ -1,5 +1,6 @@
 package com.fedomn.eurekaserver.aws;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Container {
@@ -8,7 +9,8 @@ public class Container {
   private String dockerName;
   private String image;
   private String imageID;
-  private Labels labels;
+  private LabelsLocal labels;
+  private Ports[] ports;
   private String desiredStatus;
   private String knownStatus;
   private Limits limits;
@@ -68,12 +70,12 @@ public class Container {
   }
 
   @JsonProperty("Labels")
-  public Labels getLabels() {
+  public LabelsLocal getLabels() {
     return labels;
   }
 
   @JsonProperty("Labels")
-  public void setLabels(Labels value) {
+  public void setLabels(LabelsLocal value) {
     this.labels = value;
   }
 
@@ -145,5 +147,15 @@ public class Container {
   @JsonProperty("Networks")
   public void setNetworks(Network[] value) {
     this.networks = value;
+  }
+
+  @JsonProperty("Ports")
+  public Ports[] getPorts() {
+    return ports;
+  }
+
+  @JsonProperty("Ports")
+  public void setPorts(Ports[] ports) {
+    this.ports = ports;
   }
 }
